@@ -39,6 +39,19 @@ namespace
         std::reverse(result.begin(), result.end());
         return result;
     }
+
+    int GetMaximum(const std::vector<int>& data)
+    {
+        auto result = abs(data[0]);
+        for (auto& value : data)
+        {
+            if (abs(value) > result)
+            {
+                result = abs(value);
+            }
+        }
+        return result;
+    }
 }
 
 CCryptoBoolFunctionAnalyzer::CCryptoBoolFunctionAnalyzer(const CBoolFunction & function, const CBoolFunctionTable & table, const CFieldCalculationEngine & engine)
@@ -53,7 +66,6 @@ CCryptoBoolFunctionAnalyzer::CCryptoBoolFunctionAnalyzer(const CBoolFunction & f
 {
     ReadWalshTable(filename);
 }
-
 
 void CCryptoBoolFunctionAnalyzer::ReadWalshTable(const std::string & filename)
 {
@@ -106,6 +118,12 @@ int CCryptoBoolFunctionAnalyzer::GetAlgebraicDegree(int coordinateFunction) cons
     auto fastMobiusTable = GetFastMobiusTable(coordinateFunction);
 
     return GetMaxCoefIndexFromTable(fastMobiusTable);
+}
+
+float CCryptoBoolFunctionAnalyzer::GetNonLinearity(int coordinateFunction) const
+{
+    auto nonLinearity = pow(2, m_engine.GetGeneratorDegree() - 2) - GetMaximum(m_walshTable[coordinateFunction]) / 2.;
+    return nonLinearity;
 }
 
 void CCryptoBoolFunctionAnalyzer::WriteWalshTable() const

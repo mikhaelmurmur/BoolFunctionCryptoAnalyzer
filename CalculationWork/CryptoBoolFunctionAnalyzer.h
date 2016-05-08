@@ -10,6 +10,7 @@ public:
     void ReadWalshTable(const std::string& filename);
     int GetImbalance(int coordinateFunction)const;
     int GetAlgebraicDegree(int coordinateFunction)const;
+    float GetNonLinearity(int coordinateFunction)const;
 private:
     void WriteWalshTable()const;
     void CalculateWalshTable();

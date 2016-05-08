@@ -2,6 +2,7 @@
 #include "easylogging++.h"
 #include "main.h"
 #include "CryptoBoolFunctionAnalyzer.h"
+#include <iomanip>
 
 void RunAllTests();
 INITIALIZE_EASYLOGGINGPP
@@ -297,10 +298,12 @@ bool Test12()
 
     CBoolFunction function(engine, "polynomialFirst.txt");
 
-    CBoolFunctionTable table(function, "boolFunction0.txt");
+    CBoolFunctionTable table(function, "boolFunction00.txt");
 
-    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine,"walshTable1.txt");
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
 
+    std::ofstream output("nonlinearity00.txt");
+    output << std::setprecision(2) << analyzer.GetNonLinearity(0) << std::endl;
 
     return true;
 }
