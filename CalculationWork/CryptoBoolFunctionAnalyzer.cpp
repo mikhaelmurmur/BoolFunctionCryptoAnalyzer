@@ -214,6 +214,42 @@ float CCryptoBoolFunctionAnalyzer::GetErrorDispersion(int inputCoordinate, int c
     return abs(errorCoef - pow(2, m_engine.GetGeneratorDegree() - 2)) / pow(2, m_engine.GetGeneratorDegree() - 2);
 }
 
+float CCryptoBoolFunctionAnalyzer::GetErrorDispersionInAverage(int inputCoordinate) const
+{
+    auto errorCoef = GetErrorDistributionCoefficientInAverage(inputCoordinate);
+    return abs(errorCoef - (m_engine.GetGeneratorDegree() - 1)*pow(2, m_engine.GetGeneratorDegree() - 2)) / 
+        ((m_engine.GetGeneratorDegree() - 1)*pow(2, m_engine.GetGeneratorDegree() - 2));
+
+}
+
+float CCryptoBoolFunctionAnalyzer::GetMaximumDifferentialProbability() const
+{
+    auto maxCount = 0;
+
+    auto size = m_function.GetFunctionInputSize();
+
+    for (int element = 1; element < size; ++element)
+    {
+        std::map<std::string, int> countDifference;
+        auto direction = (CFieldElement)GetBinaryRepresentation(element);
+        for (int input = 0; input < size; ++input)
+        {
+            auto result = GetDifferencialValue((CFieldElement)GetBinaryRepresentation(input), direction);
+            ++countDifference[(std::string)result];
+        }
+
+        for (auto& entry : countDifference)
+        {
+            if (entry.second > maxCount)
+            {
+                maxCount = entry.second;
+            }
+        }
+    }
+
+    return maxCount/pow(2,m_engine.GetGeneratorDegree()-1);
+}
+
 void CCryptoBoolFunctionAnalyzer::WriteWalshTable() const
 {
     static int fileNumber = 0;
@@ -242,6 +278,17 @@ void CCryptoBoolFunctionAnalyzer::CalculateWalshTable()
     {
         m_walshTable.push_back(CalculateCoordinateFunctionWalshTable(coordinate));
     }
+}
+
+CFieldElement CCryptoBoolFunctionAnalyzer::GetDifferencialValue(const CFieldElement & argument, const CFieldElement & direction) const
+{
+    auto arg = argument;
+    auto dir = direction;
+    auto result = m_engine.Addition(arg,dir);
+    
+    auto firstArg = m_table.GetFunctionValue(arg);
+    auto secondArg = m_table.GetFunctionValue(dir);
+    return m_engine.Addition(firstArg, secondArg);
 }
 
 std::vector<int> CCryptoBoolFunctionAnalyzer::CalculateCoordinateFunctionWalshTable(int coordinateFunction)

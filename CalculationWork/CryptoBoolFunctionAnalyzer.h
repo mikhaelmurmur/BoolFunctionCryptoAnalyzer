@@ -16,9 +16,12 @@ public:
     int GetErrorDistributionCoefficient(int inputCoordinate, int coordinateFunction)const;
     int GetErrorDistributionCoefficientInAverage(int inputCoordinate)const;
     float GetErrorDispersion(int inputCoordinate, int coordinateFunction)const;
+    float GetErrorDispersionInAverage(int inputCoordinate)const;
+    float GetMaximumDifferentialProbability()const;
 private:
     void WriteWalshTable()const;
     void CalculateWalshTable();
+    CFieldElement GetDifferencialValue(const CFieldElement& argument, const CFieldElement& direction)const;
     std::vector<int> CalculateCoordinateFunctionWalshTable(int coordinateFunction);
     std::vector<std::vector<int>> m_walshTable;
     std::vector<int> GetFastMobiusTable(int coordinateFunction) const;

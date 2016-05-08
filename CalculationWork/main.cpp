@@ -34,7 +34,7 @@ bool Test1()
     second.SetBit(5, 1);
 
     auto result = engine.Addition(first, second);
-    
+
     auto resultRepresentation = result.GetRepresentation();
 
     for (auto& coordinate : resultRepresentation)
@@ -202,7 +202,7 @@ bool Test7()
     return true;
 }
 
-bool Test8() 
+bool Test8()
 {
     CFieldElement generator;
     generator.SetBit(17, 1);
@@ -232,7 +232,7 @@ bool Test9()
     CBoolFunctionTable table(function, "boolFunction1.txt");
 
     CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
-   
+
     std::ofstream imbalanceInfo("imbalanceinfo1.txt");
 
     for (int coordinate = 0; coordinate < generator.GetDegree(); ++coordinate)
@@ -344,12 +344,12 @@ bool Test14()
     CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
 
     std::ofstream output("errors0.txt");
-    for (int inputCoordinate = 0; inputCoordinate < generator.GetDegree()-1; ++inputCoordinate)
+    for (int inputCoordinate = 0; inputCoordinate < generator.GetDegree() - 1; ++inputCoordinate)
     {
-        output << std::setprecision(2) << analyzer.GetErrorDistributionCoefficient(inputCoordinate,0)<<" " 
+        output << std::setprecision(2) << analyzer.GetErrorDistributionCoefficient(inputCoordinate, 0) << " "
             << analyzer.GetErrorDispersion(inputCoordinate, 0) << std::endl;
     }
-    
+
     return true;
 }
 
@@ -370,7 +370,7 @@ bool Test15()
 
     std::ofstream algebraicDegree("algebraicDegreeinfo1.txt");
 
-    for (int coordinate = 0; coordinate < generator.GetDegree()-1; ++coordinate)
+    for (int coordinate = 0; coordinate < generator.GetDegree() - 1; ++coordinate)
     {
         algebraicDegree << coordinate << " " << analyzer.GetAlgebraicDegree(coordinate) << std::endl;
     }
@@ -392,22 +392,46 @@ bool Test16()
 
     CBoolFunctionTable table(function, "boolFunction1.txt");
 
-    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine,"walshTable1.txt");
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine, "walshTable1.txt");
 
     std::ofstream errorOutput("errorCoef1.txt");
 
     for (int coordinate = 0; coordinate < generator.GetDegree() - 1; ++coordinate)
     {
-        errorOutput << coordinate << " " << analyzer.GetErrorDistributionCoefficientInAverage(coordinate) 
-            << std::endl;
+        errorOutput << coordinate << " " << analyzer.GetErrorDistributionCoefficientInAverage(coordinate)
+            << " " << analyzer.GetErrorDispersionInAverage(coordinate) << std::endl;
     }
 
     return true;
 }
 
+bool Test17()
+{
+    CFieldElement generator;
+    generator.SetBit(17, 1);
+    generator.SetBit(3, 1);
+    generator.SetBit(0, 1);
+
+    CFieldCalculationEngine engine(generator);
+
+    CBoolFunction function(engine, "polynomialFirst.txt");
+
+    CBoolFunctionTable table(function, "boolFunction1.txt");
+
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine, "walshTable1.txt");
+
+    std::ofstream differenceOutput("errorCoef1.txt");
+
+    differenceOutput << analyzer.GetMaximumDifferentialProbability() << std::endl;
+
+    return true;
+}
+
+
+
 void RunAllTests()
 {
-    Test16();
+    Test17();
 }
 
 
