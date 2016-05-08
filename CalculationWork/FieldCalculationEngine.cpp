@@ -15,7 +15,7 @@ namespace
     }
 }
 
-CFieldElement CFieldCalculationEngine::Addition(CFieldElement & first, CFieldElement & second)
+CFieldElement CFieldCalculationEngine::Addition(CFieldElement & first,CFieldElement & second) const
 {
     CFieldElement result;
 

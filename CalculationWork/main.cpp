@@ -379,9 +379,35 @@ bool Test15()
     return true;
 }
 
+bool Test16()
+{
+    CFieldElement generator;
+    generator.SetBit(17, 1);
+    generator.SetBit(3, 1);
+    generator.SetBit(0, 1);
+
+    CFieldCalculationEngine engine(generator);
+
+    CBoolFunction function(engine, "polynomialFirst.txt");
+
+    CBoolFunctionTable table(function, "boolFunction1.txt");
+
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine,"walshTable1.txt");
+
+    std::ofstream errorOutput("errorCoef1.txt");
+
+    for (int coordinate = 0; coordinate < generator.GetDegree() - 1; ++coordinate)
+    {
+        errorOutput << coordinate << " " << analyzer.GetErrorDistributionCoefficientInAverage(coordinate) 
+            << std::endl;
+    }
+
+    return true;
+}
+
 void RunAllTests()
 {
-   // Test15();
+    Test16();
 }
 
 

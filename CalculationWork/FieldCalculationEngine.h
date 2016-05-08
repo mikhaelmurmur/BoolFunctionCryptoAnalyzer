@@ -7,7 +7,7 @@ class CFieldCalculationEngine
 public:
     explicit CFieldCalculationEngine(CFieldElement generator) :m_generator(generator) {};
     ~CFieldCalculationEngine() {};
-    CFieldElement Addition( CFieldElement& first,  CFieldElement& second);
+    CFieldElement Addition( CFieldElement& first,  CFieldElement& second)const;
     CFieldElement Multiplication(CFieldElement& first, CFieldElement& second);
     CFieldElement Square(CFieldElement& element) { return Multiplication(element, element); };
     CFieldElement Power(CFieldElement& element, int power);

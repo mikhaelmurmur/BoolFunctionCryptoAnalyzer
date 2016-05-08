@@ -189,6 +189,25 @@ int CCryptoBoolFunctionAnalyzer::GetErrorDistributionCoefficient(int inputCoordi
     return errorCoef;
 }
 
+int CCryptoBoolFunctionAnalyzer::GetErrorDistributionCoefficientInAverage(int inputCoordinate) const
+{
+    auto size = m_function.GetFunctionInputSize();
+
+    auto errorCoef = 0;
+
+    for (int input = 0; input < size; ++input)
+    {
+        auto shiftedValue = (CFieldElement)GetBinaryRepresentation(input);
+        shiftedValue.AddBit(inputCoordinate, 1);
+        auto firstValue = m_table.GetFunctionValue((CFieldElement)GetBinaryRepresentation(input));
+        auto secondValue = m_table.GetFunctionValue(shiftedValue);
+        auto result = m_engine.Addition(firstValue,secondValue);
+        errorCoef += result.GetWeight();
+    }
+
+    return errorCoef;
+}
+
 float CCryptoBoolFunctionAnalyzer::GetErrorDispersion(int inputCoordinate, int coordinateFunction) const
 {
     auto errorCoef = GetErrorDistributionCoefficient(inputCoordinate, coordinateFunction);

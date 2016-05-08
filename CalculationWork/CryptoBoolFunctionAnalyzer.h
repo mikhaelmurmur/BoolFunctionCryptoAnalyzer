@@ -14,6 +14,7 @@ public:
     float GetNonLinearity(int coordinateFunction)const;
     int GetCorrelationImmunity(int coordinateFunction)const;
     int GetErrorDistributionCoefficient(int inputCoordinate, int coordinateFunction)const;
+    int GetErrorDistributionCoefficientInAverage(int inputCoordinate)const;
     float GetErrorDispersion(int inputCoordinate, int coordinateFunction)const;
 private:
     void WriteWalshTable()const;

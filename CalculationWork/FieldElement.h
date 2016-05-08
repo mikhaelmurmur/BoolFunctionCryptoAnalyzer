@@ -15,6 +15,7 @@ public:
     void LeftShift(int position);
     void Reduce();
     operator std::string()const;
+    int GetWeight()const;
 private:
     std::vector<int> m_insideRepresentation;
 };

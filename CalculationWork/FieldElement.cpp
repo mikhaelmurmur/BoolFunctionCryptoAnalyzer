@@ -75,3 +75,16 @@ CFieldElement::operator std::string() const
     }
     return result;
 }
+
+int CFieldElement::GetWeight() const
+{
+    auto result = 0;
+    for (auto& coordinate : m_insideRepresentation)
+    {
+        if (coordinate == 1)
+        {
+            ++result;
+        }
+    }
+    return result;
+}
