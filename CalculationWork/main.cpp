@@ -267,10 +267,47 @@ bool Test10()
     return true;
 }
 
+bool Test11()
+{
+    CFieldElement generator;
+    generator.SetBit(5, 1);
+    generator.SetBit(3, 1);
+    generator.SetBit(0, 1);
+
+    CFieldCalculationEngine engine(generator);
+
+    CBoolFunction function(engine, "polynomialFirst.txt");
+
+    CBoolFunctionTable table(function, "boolFunction0.txt");
+
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
+
+
+    return true;
+}
+
+bool Test12()
+{
+    CFieldElement generator;
+    generator.SetBit(5, 1);
+    generator.SetBit(3, 1);
+    generator.SetBit(0, 1);
+
+    CFieldCalculationEngine engine(generator);
+
+    CBoolFunction function(engine, "polynomialFirst.txt");
+
+    CBoolFunctionTable table(function, "boolFunction0.txt");
+
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine,"walshTable1.txt");
+
+
+    return true;
+}
+
 void RunAllTests()
 {
-    Test9();
-    Test10();
+    Test12();
 }
 
 
