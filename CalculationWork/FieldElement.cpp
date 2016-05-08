@@ -26,11 +26,12 @@ void CFieldElement::SetBit(int position, int value)
 
 void CFieldElement::AddBit(int position, int value)
 {
-    if (m_insideRepresentation.size() < position)
+    if (m_insideRepresentation.size() <= position)
     {
         SetBit(position, 0);
     }
     m_insideRepresentation[position] += value;
+    m_insideRepresentation[position] %= 2;
 }
 
 void CFieldElement::LeftShift(int position)

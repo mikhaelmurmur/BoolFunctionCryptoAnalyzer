@@ -126,6 +126,60 @@ float CCryptoBoolFunctionAnalyzer::GetNonLinearity(int coordinateFunction) const
     return nonLinearity;
 }
 
+int CCryptoBoolFunctionAnalyzer::GetCorrelationImmunity(int coordinateFunction) const
+{
+    auto data = m_walshTable[coordinateFunction];
+
+    auto size = data.size();
+
+    std::vector<bool> correlationImmunitty(m_engine.GetGeneratorDegree());
+    for (auto& index : correlationImmunitty)
+    {
+        index = true;
+    }
+
+    for (int index = 0; index < size; ++index)
+    {
+        if (data[index] != 0)
+        {
+            auto ones = GetOnesInNumber(index);
+            correlationImmunitty[ones] = false;
+        }
+    }
+
+    for (int index = correlationImmunitty.size() - 1; index > -1; --index)
+    {
+        if (correlationImmunitty[index])
+        {
+            return index;
+        }
+    }
+    return 0;
+}
+
+int CCryptoBoolFunctionAnalyzer::GetErrorDistributionCoefficient(int inputCoordinate, int coordinateFunction) const
+{
+    auto size = m_function.GetFunctionInputSize();
+
+    auto errorCoef = 0;
+
+    for (int input = 0; input < size; ++input)
+    {
+        auto shiftedValue = (CFieldElement)GetBinaryRepresentation(input);
+        shiftedValue.AddBit(inputCoordinate, 1);
+        errorCoef += (m_table.GetCoordinateFunctionValue((CFieldElement)GetBinaryRepresentation(input), coordinateFunction)
+            + m_table.GetCoordinateFunctionValue(shiftedValue, coordinateFunction))%2;
+    }
+
+    return errorCoef;
+}
+
+float CCryptoBoolFunctionAnalyzer::GetErrorDispersion(int inputCoordinate, int coordinateFunction) const
+{
+    auto errorCoef = GetErrorDistributionCoefficient(inputCoordinate, coordinateFunction);
+    return abs(errorCoef - pow(2, m_engine.GetGeneratorDegree() - 2)) / pow(2, m_engine.GetGeneratorDegree() - 2);
+}
+
 void CCryptoBoolFunctionAnalyzer::WriteWalshTable() const
 {
     static int fileNumber = 0;

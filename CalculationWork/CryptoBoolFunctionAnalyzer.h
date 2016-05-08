@@ -11,6 +11,9 @@ public:
     int GetImbalance(int coordinateFunction)const;
     int GetAlgebraicDegree(int coordinateFunction)const;
     float GetNonLinearity(int coordinateFunction)const;
+    int GetCorrelationImmunity(int coordinateFunction)const;
+    int GetErrorDistributionCoefficient(int inputCoordinate,int coordinateFunction)const;
+    float GetErrorDispersion(int inputCoordinate, int coordinateFunction)const;
 private:
     void WriteWalshTable()const;
     void CalculateWalshTable();

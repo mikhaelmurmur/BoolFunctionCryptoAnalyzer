@@ -283,7 +283,6 @@ bool Test11()
 
     CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
 
-
     return true;
 }
 
@@ -308,9 +307,55 @@ bool Test12()
     return true;
 }
 
+bool Test13()
+{
+    CFieldElement generator;
+    generator.SetBit(5, 1);
+    generator.SetBit(3, 1);
+    generator.SetBit(0, 1);
+
+    CFieldCalculationEngine engine(generator);
+
+    CBoolFunction function(engine, "polynomialFirst.txt");
+
+    CBoolFunctionTable table(function, "boolFunction0.txt");
+
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
+
+    std::ofstream output("correlationImmunity0.txt");
+    output << std::setprecision(2) << analyzer.GetCorrelationImmunity(0) << std::endl;
+
+    return true;
+}
+
+bool Test14()
+{
+    CFieldElement generator;
+    generator.SetBit(5, 1);
+    generator.SetBit(3, 1);
+    generator.SetBit(0, 1);
+
+    CFieldCalculationEngine engine(generator);
+
+    CBoolFunction function(engine, "polynomialFirst.txt");
+
+    CBoolFunctionTable table(function, "boolFunction0.txt");
+
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
+
+    std::ofstream output("errors0.txt");
+    for (int inputCoordinate = 0; inputCoordinate < generator.GetDegree()-1; ++inputCoordinate)
+    {
+        output << std::setprecision(2) << analyzer.GetErrorDistributionCoefficient(inputCoordinate,0)<<" " 
+            << analyzer.GetErrorDispersion(inputCoordinate, 0) << std::endl;
+    }
+    
+    return true;
+}
+
 void RunAllTests()
 {
-    Test12();
+    Test14();
 }
 
 
