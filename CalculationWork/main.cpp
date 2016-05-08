@@ -353,9 +353,35 @@ bool Test14()
     return true;
 }
 
+bool Test15()
+{
+    CFieldElement generator;
+    generator.SetBit(17, 1);
+    generator.SetBit(3, 1);
+    generator.SetBit(0, 1);
+
+    CFieldCalculationEngine engine(generator);
+
+    CBoolFunction function(engine, "polynomialFirst.txt");
+
+    CBoolFunctionTable table(function, "boolFunction1.txt");
+
+    CCryptoBoolFunctionAnalyzer analyzer(function, table, engine);
+
+    std::ofstream algebraicDegree("algebraicDegreeinfo1.txt");
+
+    for (int coordinate = 0; coordinate < generator.GetDegree()-1; ++coordinate)
+    {
+        algebraicDegree << coordinate << " " << analyzer.GetAlgebraicDegree(coordinate) << std::endl;
+    }
+    algebraicDegree << analyzer.GetAlgebraicDegree() << std::endl;
+
+    return true;
+}
+
 void RunAllTests()
 {
-    Test14();
+   // Test15();
 }
 
 

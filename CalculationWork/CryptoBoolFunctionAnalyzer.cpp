@@ -120,6 +120,21 @@ int CCryptoBoolFunctionAnalyzer::GetAlgebraicDegree(int coordinateFunction) cons
     return GetMaxCoefIndexFromTable(fastMobiusTable);
 }
 
+int CCryptoBoolFunctionAnalyzer::GetAlgebraicDegree() const
+{
+    auto size = m_engine.GetGeneratorDegree()-1;
+    auto maxDegree = 0;
+    for (int coordinate = 0; coordinate < size; ++coordinate)
+    {
+        auto degree = GetAlgebraicDegree(coordinate);
+        if (degree > maxDegree)
+        {
+            maxDegree = degree;
+        }
+    }
+    return maxDegree;
+}
+
 float CCryptoBoolFunctionAnalyzer::GetNonLinearity(int coordinateFunction) const
 {
     auto nonLinearity = pow(2, m_engine.GetGeneratorDegree() - 2) - GetMaximum(m_walshTable[coordinateFunction]) / 2.;
@@ -202,7 +217,7 @@ void CCryptoBoolFunctionAnalyzer::WriteWalshTable() const
 
 void CCryptoBoolFunctionAnalyzer::CalculateWalshTable()
 {
-    auto size = m_function.GetFunctionInputSize();
+    auto size = m_engine.GetGeneratorDegree()-1;
 
     for (int coordinate = 0; coordinate < size; ++coordinate)
     {

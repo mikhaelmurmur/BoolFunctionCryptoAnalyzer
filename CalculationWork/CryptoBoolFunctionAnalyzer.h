@@ -10,9 +10,10 @@ public:
     void ReadWalshTable(const std::string& filename);
     int GetImbalance(int coordinateFunction)const;
     int GetAlgebraicDegree(int coordinateFunction)const;
+    int GetAlgebraicDegree()const;
     float GetNonLinearity(int coordinateFunction)const;
     int GetCorrelationImmunity(int coordinateFunction)const;
-    int GetErrorDistributionCoefficient(int inputCoordinate,int coordinateFunction)const;
+    int GetErrorDistributionCoefficient(int inputCoordinate, int coordinateFunction)const;
     float GetErrorDispersion(int inputCoordinate, int coordinateFunction)const;
 private:
     void WriteWalshTable()const;
