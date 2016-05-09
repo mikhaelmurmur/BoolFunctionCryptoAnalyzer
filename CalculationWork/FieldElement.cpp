@@ -1,5 +1,23 @@
 #include "FieldElement.h"
 
+namespace 
+{
+    int GetNumberFromString(const std::string& data)
+    {
+        auto result = 0;
+        auto multiplier = 1;
+        for (auto it = data.rbegin(); it != data.rend(); ++it)
+        {
+            if (*it == '1')
+            {
+                result += multiplier;
+            }
+            multiplier *= 2;
+        }
+        return result;
+    }
+}
+
 CFieldElement::CFieldElement(const std::string & inputElement)
 {
     int coordinatePosition = 0;
@@ -9,6 +27,16 @@ CFieldElement::CFieldElement(const std::string & inputElement)
         {
             SetBit(coordinatePosition, 1);
         }
+    }
+    m_representation = 0;
+    auto multiplier = 1;
+    for (auto& coordinate : m_insideRepresentation)
+    {
+        if (coordinate == 1)
+        {
+            m_representation += multiplier;
+        }
+        multiplier *= 2;
     }
 }
 
@@ -32,6 +60,7 @@ void CFieldElement::AddBit(int position, int value)
     }
     m_insideRepresentation[position] += value;
     m_insideRepresentation[position] %= 2;
+
 }
 
 void CFieldElement::LeftShift(int position)
@@ -44,6 +73,7 @@ void CFieldElement::LeftShift(int position)
     }
 
     m_insideRepresentation = newInsideRepresentation;
+
 }
 
 void CFieldElement::Reduce()
@@ -52,6 +82,7 @@ void CFieldElement::Reduce()
     {
         m_insideRepresentation.pop_back();
     }
+
 }
 
 CFieldElement::operator std::string() const
@@ -74,6 +105,11 @@ CFieldElement::operator std::string() const
         result += '0';
     }
     return result;
+}
+
+CFieldElement::operator int() const
+{
+    return m_representation;
 }
 
 int CFieldElement::GetWeight() const

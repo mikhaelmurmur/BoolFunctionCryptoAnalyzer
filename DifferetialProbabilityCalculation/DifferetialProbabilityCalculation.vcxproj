@@ -19,9 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{C243415E-9A1C-47E1-B1EF-253C21A812E0}</ProjectGuid>
+    <ProjectGuid>{3424B15B-2115-4CFD-972E-D2DDC54106A5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>CalculationWork</RootNamespace>
+    <RootNamespace>DifferetialProbabilityCalculation</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -77,7 +77,6 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -117,8 +116,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalUsingDirectories>%(AdditionalUsingDirectories)</AdditionalUsingDirectories>
-      <AdditionalIncludeDirectories>E:\Programming %28Official%29\CryptoSymm\CalculationWork\UnitTests</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -136,12 +133,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <OmitFramePointers>true</OmitFramePointers>
-      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
-      <EnableParallelCodeGeneration>true</EnableParallelCodeGeneration>
-      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -154,23 +145,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BoolFunction.h" />
-    <ClInclude Include="BoolFunctionTable.h" />
-    <ClInclude Include="CryptoBoolFunctionAnalyzer.h" />
-    <ClInclude Include="easylogging++.h" />
-    <ClInclude Include="FieldCalculationEngine.h" />
-    <ClInclude Include="FieldElement.h" />
-    <ClInclude Include="main.h" />
+    <ClInclude Include="FieldTableDiff.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BoolFunction.cpp" />
-    <ClCompile Include="BoolFunctionTable.cpp" />
-    <ClCompile Include="CryptoBoolFunctionAnalyzer.cpp" />
-    <ClCompile Include="FieldCalculationEngine.cpp" />
-    <ClCompile Include="FieldElement.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="DifferetialProbabilityCalculation.cpp" />
+    <ClCompile Include="FieldTableDiff.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

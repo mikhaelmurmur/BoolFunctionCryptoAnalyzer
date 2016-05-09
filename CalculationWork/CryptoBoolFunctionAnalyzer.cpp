@@ -122,7 +122,7 @@ int CCryptoBoolFunctionAnalyzer::GetAlgebraicDegree(int coordinateFunction) cons
 
 int CCryptoBoolFunctionAnalyzer::GetAlgebraicDegree() const
 {
-    auto size = m_engine.GetGeneratorDegree()-1;
+    auto size = m_engine.GetGeneratorDegree() - 1;
     auto maxDegree = 0;
     for (int coordinate = 0; coordinate < size; ++coordinate)
     {
@@ -183,7 +183,7 @@ int CCryptoBoolFunctionAnalyzer::GetErrorDistributionCoefficient(int inputCoordi
         auto shiftedValue = (CFieldElement)GetBinaryRepresentation(input);
         shiftedValue.AddBit(inputCoordinate, 1);
         errorCoef += (m_table.GetCoordinateFunctionValue((CFieldElement)GetBinaryRepresentation(input), coordinateFunction)
-            + m_table.GetCoordinateFunctionValue(shiftedValue, coordinateFunction))%2;
+            + m_table.GetCoordinateFunctionValue(shiftedValue, coordinateFunction)) % 2;
     }
 
     return errorCoef;
@@ -201,7 +201,7 @@ int CCryptoBoolFunctionAnalyzer::GetErrorDistributionCoefficientInAverage(int in
         shiftedValue.AddBit(inputCoordinate, 1);
         auto firstValue = m_table.GetFunctionValue((CFieldElement)GetBinaryRepresentation(input));
         auto secondValue = m_table.GetFunctionValue(shiftedValue);
-        auto result = m_engine.Addition(firstValue,secondValue);
+        auto result = m_engine.Addition(firstValue, secondValue);
         errorCoef += result.GetWeight();
     }
 
@@ -217,7 +217,7 @@ float CCryptoBoolFunctionAnalyzer::GetErrorDispersion(int inputCoordinate, int c
 float CCryptoBoolFunctionAnalyzer::GetErrorDispersionInAverage(int inputCoordinate) const
 {
     auto errorCoef = GetErrorDistributionCoefficientInAverage(inputCoordinate);
-    return abs(errorCoef - (m_engine.GetGeneratorDegree() - 1)*pow(2, m_engine.GetGeneratorDegree() - 2)) / 
+    return abs(errorCoef - (m_engine.GetGeneratorDegree() - 1)*pow(2, m_engine.GetGeneratorDegree() - 2)) /
         ((m_engine.GetGeneratorDegree() - 1)*pow(2, m_engine.GetGeneratorDegree() - 2));
 
 }
@@ -247,7 +247,7 @@ float CCryptoBoolFunctionAnalyzer::GetMaximumDifferentialProbability() const
         }
     }
 
-    return maxCount/pow(2,m_engine.GetGeneratorDegree()-1);
+    return maxCount / pow(2, m_engine.GetGeneratorDegree() - 1);
 }
 
 void CCryptoBoolFunctionAnalyzer::WriteWalshTable() const
@@ -272,7 +272,7 @@ void CCryptoBoolFunctionAnalyzer::WriteWalshTable() const
 
 void CCryptoBoolFunctionAnalyzer::CalculateWalshTable()
 {
-    auto size = m_engine.GetGeneratorDegree()-1;
+    auto size = m_engine.GetGeneratorDegree() - 1;
 
     for (int coordinate = 0; coordinate < size; ++coordinate)
     {
@@ -284,8 +284,8 @@ CFieldElement CCryptoBoolFunctionAnalyzer::GetDifferencialValue(const CFieldElem
 {
     auto arg = argument;
     auto dir = direction;
-    auto result = m_engine.Addition(arg,dir);
-    
+    auto result = m_engine.Addition(arg, dir);
+
     auto firstArg = m_table.GetFunctionValue(arg);
     auto secondArg = m_table.GetFunctionValue(dir);
     return m_engine.Addition(firstArg, secondArg);
